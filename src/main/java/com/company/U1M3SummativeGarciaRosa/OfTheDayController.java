@@ -28,7 +28,7 @@ public class OfTheDayController {
         quoteList.add(new QuoteOfTheDay("William Shakespeare", "We know what we are, but know not what we may be."));
         quoteList.add(new QuoteOfTheDay("Ralph Waldo Emerson", "What lies behind you and what lies in front of you, pales in comparison to what lies inside of you."));
         quoteList.add(new QuoteOfTheDay("Mahatma Gandhi", "Be the change that you wish to see in the world."));
-        quoteList.add(new QuoteOfTheDay("Walt Whitman", "Keep your face always toward the sunshine, and shadows will fall behind you"));
+        quoteList.add(new QuoteOfTheDay("Walt Whitman", "Keep your face always toward the sunshine, and shadows will fall behind you."));
         wordList.add(new WordOfTheDay("lionize(v.)", "to treat as an object of great interest or importance"));
         wordList.add(new WordOfTheDay("circumspect(adj.)", "careful to consider all circumstances and possible consequences"));
         wordList.add(new WordOfTheDay("asperity(n.)", "roughness of manner or of temper"));
@@ -47,20 +47,20 @@ public class OfTheDayController {
         magicList.add(new Magic8Ball("Very doubtful."));
     }
 
-    @RequestMapping(value = "/quote/{quote}", method = RequestMethod.GET)
-    public QuoteOfTheDay getRandomQuote(@PathVariable String quote){
-       return quoteList.get(random.nextInt(quoteList.size()));
-}
-    @RequestMapping(value = "/word/{word}", method = RequestMethod.GET)
-    public WordOfTheDay getRandomWord(@PathVariable String word) {
+    @RequestMapping(value = "/quote", method = RequestMethod.GET)
+    public QuoteOfTheDay getRandomQuote() {
+        return quoteList.get(random.nextInt(quoteList.size()));
+    }
+    @RequestMapping(value = "/word", method = RequestMethod.GET)
+    public WordOfTheDay getRandomWord() {
         return wordList.get(random.nextInt(wordList.size()));
     }
 
-    @RequestMapping(value = "/magic/{question}", method = RequestMethod.POST)
+    @RequestMapping(value = "/magic", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Magic8Ball addQuestion(@RequestBody @Valid Magic8Ball question){
-        this.magicList.add(question);
-        return magicList.get(random.nextInt(magicList.size()));
+    public Magic8Ball addQuestion(@RequestBody @Valid String question){
+        int x = random.nextInt(magicList.size());
+        this.magicList.get(x).setQuestion(question);
+        return magicList.get(x);
     }
 }
-
